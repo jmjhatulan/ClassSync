@@ -1,7 +1,6 @@
 :root {
   color-scheme: light;
-  font-family:
-    "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
   color: #172033;
   background: #fff;
   font-synthesis: none;
@@ -17,8 +16,7 @@ body {
   margin: 0;
   background:
     radial-gradient(circle at 8% 12%, #fff8df 0 7rem, transparent 19rem),
-    radial-gradient(circle at 92% 78%, #e8f7f4 0 8rem, transparent 23rem),
-    #fff;
+    radial-gradient(circle at 92% 78%, #e8f7f4 0 8rem, transparent 23rem), #fff;
 }
 
 .hub {
@@ -34,9 +32,10 @@ body {
 }
 
 .hub__logo {
-  width: 74px;
-  height: 74px;
-  margin-bottom: 12px;
+  display: block;
+  width: min(100%, 900px);
+  height: auto;
+  margin: 0 auto 12px;
   filter: drop-shadow(0 8px 10px rgba(37, 99, 235, 0.14));
 }
 
@@ -50,7 +49,7 @@ body {
 }
 
 .hub__header p {
-  max-width: 420px;
+  max-width: 700px;
   margin: 16px auto 0;
   color: #64748b;
   font-size: 1.05rem;

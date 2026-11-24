@@ -73,8 +73,8 @@ header {
 
 .app-brand img {
   display: block;
-  width: 42px;
-  height: 42px;
+  width: 76px;
+  height: auto;
 }
 
 .app-brand:focus-visible {
