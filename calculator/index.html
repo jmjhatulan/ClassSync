@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Calculate the minimum grades needed to reach target transmuted grades."
+    />
+    <title>Transmuted Grade Target Calculator</title>
+    <link rel="icon" type="image/png" href="../assets/ClassSync.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main id="mainContent">
+      <header class="app-header">
+        <a
+          class="app-brand"
+          href="../index.html"
+          aria-label="Back to ClassSync"
+        >
+          <img src="../assets/ClassSync.png" alt="" />
+          <span class="sr-only">ClassSync home</span>
+        </a>
+        <h1>Transmuted Grade Target Calculator</h1>
+        <p class="app-version">V1.1 · 20261124</p>
+      </header>
+
+      <!-- Panel containing Course Structure & Grades Already Released side-by-side -->
+      <section class="panel config-panel">
+        <div class="fields-row">
+          <div>
+            <label for="courseType">Course Structure</label>
+            <select id="courseType">
+              <option value="2">2-Module Course</option>
+              <option value="3">3-Module Course</option>
+            </select>
+          </div>
+          <div id="releaseWrap" class="hidden">
+            <label for="released">Grades already released</label>
+            <select id="released">
+              <option value="1">Module 1 only</option>
+              <option value="2">Modules 1 and 2</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Separate Panel for Module Grade Inputs -->
+      <section class="panel grades-panel">
+        <div class="fields-row">
+          <div>
+            <label for="m1">Module 1 grade (%)</label>
+            <input
+              id="m1"
+              type="number"
+              min="0"
+              max="100"
+              step="0.01"
+              value=""
+              placeholder="e.g. 67.9"
+              inputmode="decimal"
+            />
+          </div>
+          <div id="m2Wrap" class="hidden">
+            <label for="m2">Module 2 grade (%)</label>
+            <input
+              id="m2"
+              type="number"
+              min="0"
+              max="100"
+              step="0.01"
+              value=""
+              placeholder="e.g. 77"
+              inputmode="decimal"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="panel results-panel">
+        <div class="section-header">
+          <h2 class="subhead">Minimum grades needed</h2>
+          <label class="checkbox-option">
+            <input type="checkbox" id="showPrecision" />
+            <span>10 decimal places</span>
+          </label>
+        </div>
+
+        <p id="resultIntro" class="small"></p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Target transmuted grade</th>
+                <th>Minimum final average</th>
+                <th id="neededHeading">Required grade</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody id="results"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel reference-panel">
+        <h2 class="subhead reference-heading">
+          Transmuted Grade Reference Table
+        </h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Grade name</th>
+                <th>Final average range</th>
+                <th>Minimum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="grade">1.00</td>
+                <td>96.01 - 100.0</td>
+                <td>96.01</td>
+              </tr>
+              <tr>
+                <td class="grade">1.25</td>
+                <td>91.51 - 96.00</td>
+                <td>91.51</td>
+              </tr>
+              <tr>
+                <td class="grade">1.50</td>
+                <td>87.01 - 91.50</td>
+                <td>87.01</td>
+              </tr>
+              <tr>
+                <td class="grade">1.75</td>
+                <td>82.51 - 87.00</td>
+                <td>82.51</td>
+              </tr>
+              <tr>
+                <td class="grade">2.00</td>
+                <td>78.01 - 82.50</td>
+                <td>78.01</td>
+              </tr>
+              <tr>
+                <td class="grade">2.25</td>
+                <td>73.51 - 78.00</td>
+                <td>73.51</td>
+              </tr>
+              <tr>
+                <td class="grade">2.50</td>
+                <td>69.01 - 73.50</td>
+                <td>69.01</td>
+              </tr>
+              <tr>
+                <td class="grade">2.75</td>
+                <td>64.51 - 69.00</td>
+                <td>64.51</td>
+              </tr>
+              <tr>
+                <td class="grade">3.00</td>
+                <td>60.00 - 64.50</td>
+                <td>60.00</td>
+              </tr>
+              <tr>
+                <td class="grade">5.00</td>
+                <td>00.00 - 59.99</td>
+                <td>00.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
