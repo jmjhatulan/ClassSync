@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="canonical"
-      href="https://jmjhatulan.github.io/ClassSync/"
-    />
+    <link rel="canonical" href="https://jmjhatulan.github.io/ClassSync/" />
     <script>
-      if (window.location.pathname.endsWith("/index.html")) {
-        window.location.replace("https://jmjhatulan.github.io/ClassSync/");
+      if (
+        window.location.hostname === "jmjhatulan.github.io" &&
+        window.location.pathname.endsWith("/index.html")
+      ) {
+        window.location.replace("/ClassSync/");
       }
     </script>
     <meta
@@ -34,10 +34,7 @@
       </header>
 
       <section class="tool-grid" aria-label="ClassSync tools">
-        <a
-          class="tool-card tool-card--presenter"
-          href="./presenter"
-        >
+        <a class="tool-card tool-card--presenter" href="./presenter">
           <span class="tool-card__art" aria-hidden="true">
             <span class="paper paper--back"></span>
             <span class="paper paper--front">
@@ -56,10 +53,7 @@
           <span class="tool-card__arrow" aria-hidden="true">&rarr;</span>
         </a>
 
-        <a
-          class="tool-card tool-card--calculator"
-          href="./calculator"
-        >
+        <a class="tool-card tool-card--calculator" href="./calculator">
           <span class="tool-card__art" aria-hidden="true">
             <span class="calculator">
               <span class="calculator__screen">A+</span>
@@ -79,7 +73,10 @@
         </a>
       </section>
 
-      <footer class="hub__footer">made for curious classrooms</footer>
+      <footer class="hub__footer">
+        made for curious classrooms
+        <div>by Joshua Miguel Hatulan</div>
+      </footer>
     </main>
   </body>
 </html>
