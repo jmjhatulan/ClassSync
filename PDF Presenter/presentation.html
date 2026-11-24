@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Presenter - Presentation View</title>
+  <link rel="icon" type="image/png" href="asset/favicon.png">
+  <link rel="stylesheet" href="style.css">
+  <!-- Load PDF.js from cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    // Point PDF.js to the worker source
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+</head>
+
+<body class="presentation-body">
+  <div class="presentation-container">
+    <div class="empty-state" id="presentation-empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+        <line x1="8" y1="21" x2="16" y2="21"></line>
+        <line x1="12" y1="17" x2="12" y2="21"></line>
+      </svg>
+      <h3>Ready to Present</h3>
+      <p>Waiting for PDF to be loaded on the Controller window...</p>
+    </div>
+
+    <!-- Active Presentation Page Canvas (slide + drawing) -->
+    <canvas id="presentation-canvas" class="presentation-canvas hidden"></canvas>
+
+    <!-- Laser Pointer dot -->
+    <div id="laser-pointer" class="laser-pointer hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

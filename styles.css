@@ -1,0 +1,298 @@
+:root {
+  color-scheme: light;
+  font-family:
+    "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  color: #172033;
+  background: #fff;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 8% 12%, #fff8df 0 7rem, transparent 19rem),
+    radial-gradient(circle at 92% 78%, #e8f7f4 0 8rem, transparent 23rem),
+    #fff;
+}
+
+.hub {
+  width: min(1050px, calc(100% - 40px));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 48px 0 36px;
+}
+
+.hub__header {
+  margin: 0 auto 34px;
+  text-align: center;
+}
+
+.hub__logo {
+  width: 74px;
+  height: 74px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 8px 10px rgba(37, 99, 235, 0.14));
+}
+
+.hub__header h1 {
+  margin: 0;
+  color: #172033;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  line-height: 0.9;
+}
+
+.hub__header p {
+  max-width: 420px;
+  margin: 16px auto 0;
+  color: #64748b;
+  font-size: 1.05rem;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.tool-card {
+  display: grid;
+  min-height: 320px;
+  grid-template-rows: 190px auto;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #172033;
+  border-radius: 22px;
+  color: inherit;
+  background: #fff;
+  box-shadow: 5px 6px 0 #172033;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.tool-card:hover {
+  transform: translate(-2px, -4px) rotate(-0.4deg);
+  box-shadow: 8px 10px 0 #172033;
+}
+
+.tool-card:focus-visible {
+  outline: 4px solid #93b4fa;
+  outline-offset: 4px;
+}
+
+.tool-card__art {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card--presenter .tool-card__art {
+  background: #a7e4dc;
+}
+
+.tool-card--presenter .tool-card__art::before,
+.tool-card--presenter .tool-card__art::after {
+  position: absolute;
+  color: rgba(23, 32, 51, 0.16);
+  content: "•  •  •";
+  font-size: 2rem;
+  letter-spacing: 0.7rem;
+}
+
+.tool-card--presenter .tool-card__art::before {
+  top: 18px;
+  left: 18px;
+}
+
+.tool-card--presenter .tool-card__art::after {
+  right: 12px;
+  bottom: 8px;
+  transform: rotate(180deg);
+}
+
+.paper {
+  position: absolute;
+  width: 116px;
+  height: 142px;
+  border: 3px solid #172033;
+  border-radius: 7px;
+  background: #fffdf6;
+  box-shadow: 7px 8px 0 rgba(23, 32, 51, 0.18);
+  transform: rotate(-8deg);
+}
+
+.paper--back {
+  top: 30px;
+  left: calc(50% - 72px);
+  background: #fff2bd;
+  transform: rotate(9deg);
+}
+
+.paper--front {
+  top: 25px;
+  left: calc(50% - 58px);
+}
+
+.paper__line {
+  display: block;
+  width: 70px;
+  height: 7px;
+  margin: 45px auto 0;
+  border-radius: 5px;
+  background: #2563eb;
+  transform: rotate(8deg);
+}
+
+.paper__line--short {
+  width: 48px;
+  margin-top: 16px;
+  background: #14b8a6;
+}
+
+.paper__fold {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 30px;
+  height: 30px;
+  border-bottom: 3px solid #172033;
+  border-left: 3px solid #172033;
+  background: #a7e4dc;
+}
+
+.tool-card__badge {
+  position: absolute;
+  right: 26px;
+  bottom: 18px;
+  padding: 5px 8px;
+  border: 2px solid #172033;
+  border-radius: 7px;
+  background: #f59e0b;
+  color: #172033;
+  font-size: 0.75rem;
+  font-weight: 900;
+  transform: rotate(7deg);
+}
+
+.tool-card--calculator .tool-card__art {
+  background: #ffe2a9;
+}
+
+.calculator {
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: calc(50% - 72px);
+  width: 144px;
+  height: 132px;
+  padding: 14px;
+  border: 3px solid #172033;
+  border-radius: 17px;
+  background: #f8fafc;
+  box-shadow: 8px 9px 0 rgba(23, 32, 51, 0.2);
+  transform: rotate(5deg);
+}
+
+.calculator__screen {
+  display: block;
+  padding: 8px 10px;
+  border: 2px solid #172033;
+  border-radius: 7px;
+  background: #a7e4dc;
+  font-size: 1.3rem;
+  font-weight: 900;
+  text-align: right;
+}
+
+.calculator__keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.calculator__keys i {
+  display: block;
+  height: 13px;
+  border: 2px solid #172033;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.calculator__spark {
+  position: absolute;
+  top: 22px;
+  right: 26px;
+  color: #f97316;
+  font-size: 2.2rem;
+  text-shadow: 2px 2px 0 #172033;
+  transform: rotate(15deg);
+}
+
+.tool-card__content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+  padding: 20px 24px 23px;
+}
+
+.tool-card__title {
+  font-size: 1.45rem;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.tool-card__description {
+  max-width: 82%;
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.tool-card__arrow {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  color: #2563eb;
+  font-size: 1.8rem;
+  font-weight: 900;
+  transition: transform 160ms ease;
+}
+
+.tool-card:hover .tool-card__arrow {
+  transform: translateX(5px);
+}
+
+.hub__footer {
+  margin-top: 34px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .hub {
+    width: min(100% - 28px, 1050px);
+    padding-top: 32px;
+  }
+
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-card {
+    min-height: 290px;
+    grid-template-rows: 165px auto;
+  }
+}

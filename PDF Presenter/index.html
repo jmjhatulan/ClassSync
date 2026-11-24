@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Presenter - Controller</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/classsync-logo.svg">
+  <link rel="stylesheet" href="style.css">
+  <!-- Load PDF.js from cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    // Point PDF.js to the worker source
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+</head>
+
+<body>
+  <header>
+    <a class="app-brand" href="../index.html" aria-label="Back to ClassSync">
+      <img src="../assets/classsync-logo.svg" alt="">
+      <span class="sr-only">ClassSync home</span>
+    </a>
+    <h1 class="app-title">PDF Presenter</h1>
+
+    <div class="header-controls">
+      <!-- File Selector -->
+      <button class="btn btn-primary" id="btn-select-file">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        Open PDF
+      </button>
+      <input type="file" id="pdf-file-input" accept="application/pdf">
+
+      <!-- Open Presentation Screen -->
+      <button class="btn" id="btn-open-presentation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        Start Presentation
+      </button>
+
+      <!-- Status badge -->
+      <div class="status-badge">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">Disconnected</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard">
+    <!-- Main Workspace -->
+    <main class="workspace">
+      <!-- Left Panel: Next Slides Preview & Notes -->
+      <aside class="left-panel">
+        <!-- Next Slide Preview (+1) -->
+        <div class="next-slide-section">
+          <label>Next Slide</label>
+          <div class="next-preview-box">
+            <div class="empty-state" id="next-empty-state">
+              <span>None</span>
+            </div>
+            <canvas id="next-preview-canvas" class="hidden"></canvas>
+          </div>
+        </div>
+
+        <!-- Next+2 Slide Preview -->
+        <div class="next-slide-section">
+          <label>Slide After Next</label>
+          <div class="next-preview-box">
+            <div class="empty-state" id="next-empty-state-2">
+              <span>None</span>
+            </div>
+            <canvas id="next-preview-canvas-2" class="hidden"></canvas>
+          </div>
+        </div>
+
+        <!-- Presenter Notes -->
+        <div class="notes-section">
+          <label for="presenter-notes">Presenter Notes</label>
+          <textarea id="presenter-notes" class="notes-textarea"
+            placeholder="Type page notes here. Notes are automatically saved per slide..."></textarea>
+        </div>
+      </aside>
+
+      <!-- Presentation Stage -->
+      <section class="presentation-stage">
+        <!-- Main Preview Box -->
+        <div class="previews-container">
+          <!-- Stage: fills the grid row and centers the aspect-ratio-locked box -->
+          <div class="preview-stage">
+            <div class="main-preview-box" id="main-preview-box">
+              <span class="preview-label">Live Preview (Current Slide)</span>
+
+              <div class="empty-state" id="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="12" y1="18" x2="12" y2="12"></line>
+                  <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+                <h3>No PDF Loaded</h3>
+                <p>Select a PDF file using the "Open PDF" button to start.</p>
+              </div>
+
+              <div class="preview-canvas-wrapper hidden" id="preview-canvas-wrapper">
+                <canvas id="main-preview-canvas"></canvas>
+                <div id="controller-laser-pointer" class="laser-pointer hidden"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Control Bar -->
+          <div class="bottom-controls-bar">
+            <!-- Navigation -->
+            <div class="navigation-controls">
+              <button class="btn-tool" id="btn-prev" title="Previous Slide (Left Arrow / PageUp)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+
+              <span class="page-indicator" id="page-indicator">0 / 0</span>
+
+              <button class="btn-tool" id="btn-next" title="Next Slide (Right Arrow / PageDown / Space)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Interactivity Tools -->
+            <div class="tool-controls">
+              <!-- Laser Pointer -->
+              <button class="btn-tool" id="btn-laser" title="Laser Pointer (L)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+                </svg>
+              </button>
+
+              <!-- Pen/Drawing -->
+              <button class="btn-tool" id="btn-draw" title="Pen Mode (P)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+
+              <!-- Color Picker (single button + popup) -->
+              <div class="color-picker-wrap" id="color-picker-wrap">
+                <button class="btn-tool" id="btn-color-picker" title="Ink Color">
+                  <span class="color-dot" id="active-color-dot" style="background:#ef4444"></span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"
+                    style="margin-left:2px;opacity:0.6">
+                    <path d="M7 10l5 5 5-5z" />
+                  </svg>
+                </button>
+                <div class="color-popup" id="color-popup">
+                  <button class="color-btn" data-color="#ef4444" id="clr-red" title="Red"><span class="color-dot"
+                      style="background:#ef4444"></span></button>
+                  <button class="color-btn" data-color="#f97316" id="clr-orange" title="Orange"><span class="color-dot"
+                      style="background:#f97316"></span></button>
+                  <button class="color-btn" data-color="#facc15" id="clr-yellow" title="Yellow"><span class="color-dot"
+                      style="background:#facc15"></span></button>
+                  <button class="color-btn" data-color="#22c55e" id="clr-green" title="Green"><span class="color-dot"
+                      style="background:#22c55e"></span></button>
+                  <button class="color-btn" data-color="#06b6d4" id="clr-cyan" title="Cyan"><span class="color-dot"
+                      style="background:#06b6d4"></span></button>
+                  <button class="color-btn" data-color="#3b82f6" id="clr-blue" title="Blue"><span class="color-dot"
+                      style="background:#3b82f6"></span></button>
+                  <button class="color-btn" data-color="#a855f7" id="clr-purple" title="Purple"><span class="color-dot"
+                      style="background:#a855f7"></span></button>
+                  <button class="color-btn" data-color="#ffffff" id="clr-white" title="White"><span class="color-dot"
+                      style="background:#ffffff"></span></button>
+                  <button class="color-btn" data-color="#111827" id="clr-black" title="Black"><span class="color-dot"
+                      style="background:#111827;border:1px solid rgba(255,255,255,0.25)"></span></button>
+                </div>
+              </div>
+
+
+              <!-- Undo Last Stroke -->
+              <button class="btn-tool" id="btn-undo-draw" title="Undo Last Stroke (Ctrl+Z / U)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 7v6h6"></path>
+                  <path d="M3 13C5.5 7 11 4.5 17 6.5s9 10 4 15"></path>
+                </svg>
+              </button>
+
+              <!-- Clear Drawings -->
+              <button class="btn-tool" id="btn-clear-draw" title="Clear Drawings (C)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+
+              <!-- Refresh Aspect & Resolution -->
+              <button class="btn-tool" id="btn-refresh-aspect" title="Refresh & Reload Aspect Size (R)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
