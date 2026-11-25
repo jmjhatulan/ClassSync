@@ -14,11 +14,7 @@
   <body>
     <main id="mainContent">
       <header class="app-header">
-        <a
-          class="app-brand"
-          href="../"
-          aria-label="Back to ClassSync"
-        >
+        <a class="app-brand" href="../" aria-label="Back to ClassSync">
           <img src="../assets/ClassSync.png" alt="" />
           <span class="sr-only">ClassSync home</span>
         </a>
@@ -26,151 +22,202 @@
         <p class="app-version">V1.1 · 20261124</p>
       </header>
 
-      <!-- Panel containing Course Structure & Grades Already Released side-by-side -->
-      <section class="panel config-panel">
-        <div class="fields-row">
-          <div>
-            <label for="courseType">Course Structure</label>
-            <select id="courseType">
-              <option value="2">2-Module Course</option>
-              <option value="3">3-Module Course</option>
-            </select>
+      <div class="left-column">
+        <section class="panel config-panel">
+          <div class="fields-row">
+            <div>
+              <label for="courseType">Course Structure</label>
+              <select id="courseType">
+                <option value="2">2-Module Course</option>
+                <option value="3">3-Module Course</option>
+              </select>
+            </div>
+            <div id="releaseWrap" class="hidden">
+              <label for="released">Grades already released</label>
+              <select id="released">
+                <option value="1">Module 1 only</option>
+                <option value="2">Modules 1 and 2</option>
+              </select>
+            </div>
           </div>
-          <div id="releaseWrap" class="hidden">
-            <label for="released">Grades already released</label>
-            <select id="released">
-              <option value="1">Module 1 only</option>
-              <option value="2">Modules 1 and 2</option>
-            </select>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Separate Panel for Module Grade Inputs -->
-      <section class="panel grades-panel">
-        <div class="fields-row">
-          <div>
-            <label for="m1">Module 1 grade (%)</label>
-            <input
-              id="m1"
-              type="number"
-              min="0"
-              max="100"
-              step="0.01"
-              value=""
-              placeholder="e.g. 67.9"
-              inputmode="decimal"
-            />
+        <section class="panel grades-panel">
+          <div class="fields-row">
+            <div>
+              <label for="m1">Module 1 grade (%)</label>
+              <input
+                id="m1"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                value=""
+                placeholder="e.g. 67.9"
+                inputmode="decimal"
+              />
+            </div>
+            <div id="m2Wrap" class="hidden">
+              <label for="m2">Module 2 grade (%)</label>
+              <input
+                id="m2"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                value=""
+                placeholder="e.g. 77"
+                inputmode="decimal"
+              />
+            </div>
           </div>
-          <div id="m2Wrap" class="hidden">
-            <label for="m2">Module 2 grade (%)</label>
-            <input
-              id="m2"
-              type="number"
-              min="0"
-              max="100"
-              step="0.01"
-              value=""
-              placeholder="e.g. 77"
-              inputmode="decimal"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="panel results-panel">
+        <section class="panel results-panel">
+          <div class="section-header">
+            <h2 class="subhead">Minimum grades needed</h2>
+            <label class="checkbox-option">
+              <input type="checkbox" id="showPrecision" />
+              <span>10 decimal places</span>
+            </label>
+          </div>
+
+          <p id="resultIntro" class="small"></p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Transmuted Grade</th>
+                  <th>Minimum Final Average</th>
+                  <th id="neededHeading">Required Grade</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody id="results"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section
+        class="panel reference-panel"
+        aria-labelledby="taskPlannerHeading"
+      >
         <div class="section-header">
-          <h2 class="subhead">Minimum grades needed</h2>
-          <label class="checkbox-option">
-            <input type="checkbox" id="showPrecision" />
-            <span>10 decimal places</span>
+          <h2 id="taskPlannerHeading" class="subhead">Grade Planner</h2>
+          <label class="target-grade-field" for="taskTarget">
+            Target grade
+            <select id="taskTarget">
+              <option value="96.01">1.00</option>
+              <option value="91.51">1.25</option>
+              <option value="87.01">1.50</option>
+              <option value="82.51">1.75</option>
+              <option value="78.01" selected>2.00</option>
+              <option value="73.51">2.25</option>
+              <option value="69.01">2.50</option>
+              <option value="64.51">2.75</option>
+              <option value="60">3.00</option>
+            </select>
           </label>
         </div>
-
-        <p id="resultIntro" class="small"></p>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Target transmuted grade</th>
-                <th>Minimum final average</th>
-                <th id="neededHeading">Required grade</th>
-                <th>Result</th>
-              </tr>
-            </thead>
-            <tbody id="results"></tbody>
-          </table>
+        <p class="small task-planner-hint">
+          Set each task's share of its module grade and enter points earned and
+          possible. Leave points earned blank for work you have not completed
+          yet. Module grades are weighted equally in the overall target.
+        </p>
+        <div id="taskModules">
+          <section class="task-module" data-module="1">
+            <div class="task-module-heading">
+              <h3>Module 1</h3>
+              <button
+                class="secondary-button add-task"
+                data-module="1"
+                type="button"
+              >
+                Add task
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table class="task-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Learning task</th>
+                    <th scope="col">Weight (%)</th>
+                    <th scope="col">Points earned / possible</th>
+                    <th scope="col">Lock</th>
+                    <th scope="col">
+                      <span class="sr-only">Remove task</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="task-list" data-module="1"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="task-module" data-module="2">
+            <div class="task-module-heading">
+              <h3>Module 2</h3>
+              <button
+                class="secondary-button add-task"
+                data-module="2"
+                type="button"
+              >
+                Add task
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table class="task-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Learning task</th>
+                    <th scope="col">Weight (%)</th>
+                    <th scope="col">Points earned / possible</th>
+                    <th scope="col">Lock</th>
+                    <th scope="col">
+                      <span class="sr-only">Remove task</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="task-list" data-module="2"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="task-module hidden" data-module="3">
+            <div class="task-module-heading">
+              <h3>Module 3</h3>
+              <button
+                class="secondary-button add-task"
+                data-module="3"
+                type="button"
+              >
+                Add task
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table class="task-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Learning task</th>
+                    <th scope="col">Weight (%)</th>
+                    <th scope="col">Points earned / possible</th>
+                    <th scope="col">Lock</th>
+                    <th scope="col">
+                      <span class="sr-only">Remove task</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="task-list" data-module="3"></tbody>
+              </table>
+            </div>
+          </section>
         </div>
-      </section>
-
-      <section class="panel reference-panel">
-        <h2 class="subhead reference-heading">
-          Transmuted Grade Reference Table
-        </h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Grade name</th>
-                <th>Final average range</th>
-                <th>Minimum</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="grade">1.00</td>
-                <td>96.01 - 100.0</td>
-                <td>96.01</td>
-              </tr>
-              <tr>
-                <td class="grade">1.25</td>
-                <td>91.51 - 96.00</td>
-                <td>91.51</td>
-              </tr>
-              <tr>
-                <td class="grade">1.50</td>
-                <td>87.01 - 91.50</td>
-                <td>87.01</td>
-              </tr>
-              <tr>
-                <td class="grade">1.75</td>
-                <td>82.51 - 87.00</td>
-                <td>82.51</td>
-              </tr>
-              <tr>
-                <td class="grade">2.00</td>
-                <td>78.01 - 82.50</td>
-                <td>78.01</td>
-              </tr>
-              <tr>
-                <td class="grade">2.25</td>
-                <td>73.51 - 78.00</td>
-                <td>73.51</td>
-              </tr>
-              <tr>
-                <td class="grade">2.50</td>
-                <td>69.01 - 73.50</td>
-                <td>69.01</td>
-              </tr>
-              <tr>
-                <td class="grade">2.75</td>
-                <td>64.51 - 69.00</td>
-                <td>64.51</td>
-              </tr>
-              <tr>
-                <td class="grade">3.00</td>
-                <td>60.00 - 64.50</td>
-                <td>60.00</td>
-              </tr>
-              <tr>
-                <td class="grade">5.00</td>
-                <td>00.00 - 59.99</td>
-                <td>00.00</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <p
+          id="weightSummary"
+          class="small task-weight-summary"
+          aria-live="polite"
+        ></p>
+        <p id="taskGoal" class="task-goal" aria-live="polite"></p>
       </section>
     </main>
     <script src="script.js"></script>
