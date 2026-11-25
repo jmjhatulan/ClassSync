@@ -237,6 +237,37 @@ body {
   transform: rotate(15deg);
 }
 
+.tool-card--randomizer .tool-card__art {
+  background: #d7cdfd;
+}
+
+.randomizer-die {
+  display: grid;
+  position: absolute;
+  top: 34px;
+  left: calc(50% - 58px);
+  width: 116px;
+  height: 116px;
+  place-items: center;
+  border: 3px solid #172033;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 8px 9px 0 rgba(23, 32, 51, 0.2);
+  color: #7c3aed;
+  font-size: 4.5rem;
+  font-weight: 900;
+  transform: rotate(-9deg);
+}
+
+.randomizer-spark {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  color: #f59e0b;
+  font-size: 2.4rem;
+  text-shadow: 2px 2px 0 #172033;
+}
+
 .tool-card__content {
   display: flex;
   min-width: 0;

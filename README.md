@@ -4,3 +4,4 @@ ClassSync is a centralized hub of digital tools and utilities designed to suppor
 Current Apps Available
 - [PDF Presenter](https://jmjhatulan.github.io/ClassSync/presenter/)
 - [Grade Target Calculator](https://jmjhatulan.github.io/ClassSync/calculator/)
+- [Randomizer](https://jmjhatulan.github.io/ClassSync/randomizer/)
